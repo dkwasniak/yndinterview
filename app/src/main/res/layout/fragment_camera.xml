@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.damiankwasniak.interview.viewmodel.CameraFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.otaliastudios.cameraview.CameraView
+            android:id="@+id/cameraView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:keepScreenOn="true"
+            app:cameraRequestPermissions="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/take_photo_background_height"
+            android:background="@color/translucent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/torchImageView" />
+
+        <ImageView
+            android:id="@+id/torchImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_baseline_grid_4x"
+            android:layout_marginBottom="@dimen/material_baseline_grid_4x"
+            android:onClick="@{() -> viewModel.onTorchButtonClicked()}"
+            android:background="@drawable/transparent_oval_button_with_white_border"
+            android:padding="@dimen/material_baseline_grid_2x"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_highlight_black" />
+
+        <Button
+            android:id="@+id/captureImageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_baseline_grid_2x"
+            android:layout_marginEnd="@dimen/material_baseline_grid_4x"
+            android:background="@drawable/white_rounded_button"
+            android:onClick="@{() -> viewModel.onTakePhotoButtonClicked()}"
+            android:text="@string/take_photo"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/torchImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/torchImageView"
+            app:layout_constraintTop_toTopOf="@id/torchImageView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/grantPermissionView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="@dimen/material_baseline_grid_1x">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.8">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/material_baseline_grid_3x"
+                    app:srcCompat="@drawable/ic_vehicle_report_missing_permission" />
+
+                <TextView
+                    style="@style/H1Headline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/missing_permission_header" />
+
+                <TextView
+                    style="@style/BodyMLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/material_baseline_grid_4x"
+                    android:layout_marginTop="@dimen/material_baseline_grid_2x"
+                    android:layout_marginEnd="@dimen/material_baseline_grid_4x"
+                    android:text="@string/missing_permission_subheader" />
+
+                <Button
+                    android:id="@+id/grantAccessButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/material_baseline_grid_4x"
+                    android:background="@drawable/black_rounded_button"
+                    android:onClick="@{() -> viewModel.onGrantPermissionButtonClicked()}"
+                    android:text="@string/grant_permission"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

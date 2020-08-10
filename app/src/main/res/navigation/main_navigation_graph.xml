@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/codeFragment">
+    <fragment
+        android:id="@+id/codeFragment"
+        android:name="com.damiankwasniak.interview.fragment.CodeFragment"
+        android:label="fragment_code"
+        tools:layout="@layout/fragment_code" >
+        <action
+            android:id="@+id/action_codeFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment"
+            app:popUpTo="@+id/main_navigation_graph" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.damiankwasniak.interview.fragment.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_cameraFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.damiankwasniak.interview.fragment.GalleryFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_gallery" />
+
+</navigation>

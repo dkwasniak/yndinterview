@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Interview</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_invalid_code">Invalid code</string>
+    <string name="grant_permission">Grant a permission</string>
+    <string name="missing_permission_header">Missing permission</string>
+    <string name="missing_permission_subheader">To take a photo we need access to the camera.</string>
+    <string name="take_photo">Take a photo</string>
+</resources>
