@@ -1,11 +1,10 @@
-package com.damiankwasniak.interview.base
+package com.damiankwasniak.interview.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import com.damiankwasniak.interview.extensions.exhaustive
 
 
 abstract class BaseActivity<T : BaseViewModel<U>, U : Any> : AppCompatActivity(), LifecycleOwner {

@@ -1,14 +1,14 @@
-package com.damiankwasniak.interview.viewmodel
+package com.damiankwasniak.interview.ui.camera
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.damiankwasniak.domain.interactor.PhotosInteractor
+import com.damiankwasniak.domain.model.PhotoDomainModel
 import com.damiankwasniak.domain.utils.AsyncResult
-import com.damiankwasniak.interview.base.BaseViewModel
+import com.damiankwasniak.interview.ui.base.BaseViewModel
 import com.damiankwasniak.interview.extensions.exhaustive
-import com.damiankwasniak.interview.file.FileManager
 import com.damiankwasniak.interview.provider.ResourcesProvider
 import kotlinx.coroutines.launch
 import java.io.File
@@ -16,7 +16,6 @@ import java.io.File
 
 class CameraFragmentViewModel(
     private val photosInteractor: PhotosInteractor,
-    private val fileManager: FileManager,
     resourcesProvider: ResourcesProvider
 ) : BaseViewModel<CameraFragmentViewModel.Command>(resourcesProvider) {
 
@@ -28,9 +27,9 @@ class CameraFragmentViewModel(
         Command.GrandPermissionButtonClicked.apply()
     }
 
-    fun onPictureTaken(file: File) {
+    fun onPictureCaptured(file: File) {
         viewModelScope.launch {
-            val result = photosInteractor.savePhoto(file)
+            val result = photosInteractor.savePhoto(PhotoDomainModel(file.readBytes()))
             when (result) {
                 is AsyncResult.Success -> Log.d("PHOTOSAVE", "photo save success")
                 is AsyncResult.Error -> Log.d("PHOTOSAVE", "photo save fail")
@@ -38,19 +37,20 @@ class CameraFragmentViewModel(
         }
     }
 
-    fun onTorchButtonClicked() {
-
+    fun onGalleryButtonClicked() {
+        Command.OpenGallery.apply()
     }
 
     fun onTakePhotoButtonClicked() {
-        val file = fileManager.createTempImageFile()
-        Command.TakePicture(file).apply()
+        Command.TakePicture.apply()
     }
 
     sealed class Command {
         object GrandPermissionButtonClicked : Command()
 
-        class TakePicture(val file: File) : Command()
+        object TakePicture : Command()
+
+        object OpenGallery : Command()
     }
 
 }

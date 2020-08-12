@@ -1,18 +1,24 @@
 package com.damiankwasniak.domain.interactor
 
+import com.damiankwasniak.domain.model.PhotoDomainModel
 import com.damiankwasniak.domain.repository.PhotosRepository
 import com.damiankwasniak.domain.utils.AsyncResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
 
 class PhotosInteractor(
     private val photosRepository: PhotosRepository
 ) {
 
-    suspend fun savePhoto(file: File): AsyncResult<Boolean> {
+    suspend fun savePhoto(model: PhotoDomainModel): AsyncResult<Boolean> {
         return withContext(Dispatchers.IO) {
-            photosRepository.savePhoto(file)
+            photosRepository.savePhoto(model)
+        }
+    }
+
+    suspend fun getPhotos(): AsyncResult<List<PhotoDomainModel>> {
+        return withContext(Dispatchers.IO) {
+            photosRepository.getPhotos()
         }
     }
 }

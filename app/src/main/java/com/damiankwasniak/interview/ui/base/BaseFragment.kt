@@ -1,4 +1,4 @@
-package com.damiankwasniak.interview.base
+package com.damiankwasniak.interview.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +25,7 @@ abstract class BaseFragment<T : BaseViewModel<U>, U : Any, B : ViewDataBinding> 
         binding = DataBindingUtil.inflate<B>(
             inflater, provideLayoutRes(), container, false
         )
+        binding.lifecycleOwner = this
         bindData(binding)
         return binding.root
     }

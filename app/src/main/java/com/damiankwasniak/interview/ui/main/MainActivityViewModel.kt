@@ -1,8 +1,8 @@
-package com.damiankwasniak.interview.viewmodel
+package com.damiankwasniak.interview.ui.main
 
 import androidx.lifecycle.viewModelScope
 import com.damiankwasniak.domain.interactor.AuthInteractor
-import com.damiankwasniak.interview.base.BaseViewModel
+import com.damiankwasniak.interview.ui.base.BaseViewModel
 import com.damiankwasniak.interview.provider.ResourcesProvider
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.damiankwasniak.interview.file
+package com.damiankwasniak.interview.manager.file
 
 import android.content.Context
 import android.os.Environment

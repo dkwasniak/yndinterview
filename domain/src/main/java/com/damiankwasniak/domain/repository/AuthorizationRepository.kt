@@ -4,7 +4,7 @@ import com.damiankwasniak.domain.utils.AsyncResult
 
 interface AuthorizationRepository {
 
-    fun checkPinCode(pinCode: String?): AsyncResult<Boolean>
+    fun checkPinCode(pinCode: String): AsyncResult<Boolean>
 
     fun lock()
 

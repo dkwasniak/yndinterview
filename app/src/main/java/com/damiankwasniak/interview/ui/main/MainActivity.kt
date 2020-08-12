@@ -1,18 +1,14 @@
-package com.damiankwasniak.interview.activity
+package com.damiankwasniak.interview.ui.main
 
 import android.os.Bundle
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.damiankwasniak.interview.R
-import com.damiankwasniak.interview.base.BaseActivity
-import com.damiankwasniak.interview.base.BaseViewModel
+import com.damiankwasniak.interview.ui.base.BaseActivity
+import com.damiankwasniak.interview.ui.base.BaseViewModel
 import com.damiankwasniak.interview.extensions.exhaustive
 import com.damiankwasniak.interview.permission.PermissionsManager
-import com.damiankwasniak.interview.viewmodel.MainActivityViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

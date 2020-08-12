@@ -53,7 +53,23 @@ dependencies {
     implementation "blue.aodev:material-values:1.1.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha06"
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation 'com.otaliastudios:cameraview:2.6.0'
+
+
+    def camerax_version = "1.0.0-beta07"
+    // The following line is optional, as the core library is included indirectly by camera-camera2
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    // If you want to additionally use the CameraX Lifecycle library
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    // If you want to additionally use the CameraX View class
+    implementation "androidx.camera:camera-view:1.0.0-alpha14"
+    // If you want to additionally use the CameraX Extensions library
+    implementation "androidx.camera:camera-extensions:1.0.0-alpha14"
+
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.uphyca:stetho_realm:2.3.0'
+    implementation "com.github.bumptech.glide:glide:$versions.glide"
+    implementation "jp.wasabeef:glide-transformations:$versions.glideTransformations"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'

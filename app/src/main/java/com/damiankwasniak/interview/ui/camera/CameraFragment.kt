@@ -1,25 +1,22 @@
-package com.damiankwasniak.interview.fragment
+package com.damiankwasniak.interview.ui.camera
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.damiankwasniak.interview.R
-import com.damiankwasniak.interview.base.BaseFragment
-import com.damiankwasniak.interview.base.BaseViewModel
 import com.damiankwasniak.interview.databinding.FragmentCameraBinding
 import com.damiankwasniak.interview.extensions.exhaustive
 import com.damiankwasniak.interview.extensions.gone
 import com.damiankwasniak.interview.extensions.startAppSettingsActivity
 import com.damiankwasniak.interview.extensions.visible
+import com.damiankwasniak.interview.manager.CameraManager
 import com.damiankwasniak.interview.permission.PermissionResult
 import com.damiankwasniak.interview.permission.PermissionState
 import com.damiankwasniak.interview.permission.PermissionsManager
-import com.damiankwasniak.interview.viewmodel.CameraFragmentViewModel
-import com.otaliastudios.cameraview.CameraListener
-import com.otaliastudios.cameraview.PictureResult
-import com.otaliastudios.cameraview.controls.Audio
-import com.otaliastudios.cameraview.controls.Flash
+import com.damiankwasniak.interview.ui.base.BaseFragment
+import com.damiankwasniak.interview.ui.base.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_camera.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,6 +26,8 @@ class CameraFragment :
     BaseFragment<CameraFragmentViewModel, CameraFragmentViewModel.Command, FragmentCameraBinding>() {
 
     private val viewModel: CameraFragmentViewModel by viewModel()
+
+    private val cameraManager: CameraManager by inject()
 
     private val permissionsManager: PermissionsManager by inject()
 
@@ -44,16 +43,8 @@ class CameraFragment :
         binding.viewModel = viewModel
     }
 
-    override fun onViewStateChanged(command: CameraFragmentViewModel.Command) {
-        when (command) {
-            CameraFragmentViewModel.Command.GrandPermissionButtonClicked -> requireContext().startAppSettingsActivity()
-            is CameraFragmentViewModel.Command.TakePicture -> takePicture(command.file)
-        }.exhaustive
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initObservers()
         lastCameraPermissionState = permissionsManager.checkPermission(requireContext(), PermissionsManager.CAMERA_PERMISSION)
         if (lastCameraPermissionState !is PermissionState.Granted) {
             permissionsManager.askForPermission(this, PermissionsManager.CAMERA_PERMISSION)
@@ -62,15 +53,39 @@ class CameraFragment :
         }
     }
 
-    private fun initObservers() {
-        viewModel.isTorchEnabled.observe(viewLifecycleOwner, Observer { enabled ->
-            cameraView.flash = if (enabled) Flash.TORCH else Flash.OFF
-        })
+
+    override fun onViewStateChanged(command: CameraFragmentViewModel.Command) {
+        when (command) {
+            CameraFragmentViewModel.Command.GrandPermissionButtonClicked -> requireContext().startAppSettingsActivity()
+            CameraFragmentViewModel.Command.TakePicture -> takePicture()
+            CameraFragmentViewModel.Command.OpenGallery -> goToGallery()
+        }.exhaustive
     }
 
-    private fun takePicture(file: File) {
-        this.imageFile = file
-        cameraView.takePicture()
+    private fun goToGallery() {
+        val direction = CameraFragmentDirections.actionCameraFragmentToGalleryFragment()
+        findNavController().navigate(direction)
+    }
+
+    private fun startCamera() {
+        cameraView?.let {
+            cameraManager.startCamera(it, this)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cameraManager.unbindAll()
+    }
+
+    private fun takePicture() {
+        cameraManager.takePhoto(
+            onPhotoCaptured = {
+                viewModel.onPictureCaptured(it)
+            },
+            onError = {
+                Log.d("CAMERA", "photo captured error")
+            })
     }
 
     override fun onRequestPermissionsResult(
@@ -91,30 +106,11 @@ class CameraFragment :
 
     private fun onPermissionGranted() {
         grantPermissionView.gone()
-        cameraView.audio = Audio.OFF
-        cameraView.close()
-        cameraView.open()
+        startCamera()
         initListeners()
-        cameraView.setLifecycleOwner(this)
     }
 
     private fun initListeners() {
-        cameraView.addCameraListener(object : CameraListener() {
-            override fun onPictureTaken(result: PictureResult) {
-                super.onPictureTaken(result)
-                this@CameraFragment.onPictureTaken(result)
-            }
-        })
-    }
-
-    private fun onPictureTaken(result: PictureResult) {
-        with(result) {
-            toFile(imageFile ?: return) { file ->
-                file?.let {
-                    viewModel.onPictureTaken(file)
-                }
-            }
-        }
 
     }
 

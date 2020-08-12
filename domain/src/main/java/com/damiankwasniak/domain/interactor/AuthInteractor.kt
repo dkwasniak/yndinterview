@@ -9,7 +9,7 @@ class AuthInteractor(
     private val authorizationRepository: AuthorizationRepository
 ) {
 
-    suspend fun checkPinCode(pinCode: String?): AsyncResult<Boolean> {
+    suspend fun checkPinCode(pinCode: String): AsyncResult<Boolean> {
         return withContext(Dispatchers.IO) {
             authorizationRepository.checkPinCode(pinCode)
         }

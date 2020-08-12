@@ -1,6 +1,7 @@
 package com.damiankwasniak.data.di
 
 import com.damiankwasniak.data.AppPrefs
+import com.damiankwasniak.data.realm.RealmProvider
 import com.damiankwasniak.data.repository.AuthorizationRepositoryImpl
 import com.damiankwasniak.data.repository.PhotosRepositoryImpl
 import com.damiankwasniak.domain.repository.AuthorizationRepository
@@ -15,14 +16,14 @@ val dataModule = module {
     }
 
     single {
-        AuthorizationRepositoryImpl(get()) as AuthorizationRepository
+        AuthorizationRepositoryImpl(get(), get(), get()) as AuthorizationRepository
     }
 
     single {
-        PhotosRepositoryImpl(get()) as PhotosRepository
+        PhotosRepositoryImpl(get(), get(), get()) as PhotosRepository
     }
 
-    single<Realm> {
-        Realm.getDefaultInstance()
+    single<RealmProvider> {
+        RealmProvider(get())
     }
 }

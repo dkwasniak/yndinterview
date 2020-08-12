@@ -6,7 +6,7 @@
     app:startDestination="@id/codeFragment">
     <fragment
         android:id="@+id/codeFragment"
-        android:name="com.damiankwasniak.interview.fragment.CodeFragment"
+        android:name="com.damiankwasniak.interview.ui.code.CodeFragment"
         android:label="fragment_code"
         tools:layout="@layout/fragment_code" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.damiankwasniak.interview.fragment.CameraFragment"
+        android:name="com.damiankwasniak.interview.ui.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="com.damiankwasniak.interview.fragment.GalleryFragment"
+        android:name="com.damiankwasniak.interview.ui.gallery.GalleryFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_gallery" />
 

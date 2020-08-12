@@ -7,22 +7,15 @@
 
         <variable
             name="viewModel"
-            type="com.damiankwasniak.interview.viewmodel.CodeFragmentViewModel" />
+            type="com.damiankwasniak.interview.ui.code.CodeFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.CodeFragment">
+        android:background="@color/colorPrimary"
+        tools:context=".ui.code.CodeFragment">
 
-        <com.damiankwasniak.interview.widget.CodeInput
-            android:id="@+id/codeInput"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -32,12 +25,44 @@
             app:layout_constraintGuide_percent="0.2" />
 
         <TextView
+            android:id="@+id/headerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Access locked"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+        <TextView
+            android:id="@+id/subheaderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_baseline_grid_2x"
+            android:text="Enter a pin code to get access to your photos"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headerTextView" />
+
+        <com.damiankwasniak.interview.widget.CodeInput
+            android:id="@+id/codeInput"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/material_baseline_grid_2x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subheaderTextView" />
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_baseline_grid_2x"
             android:layout_marginEnd="@dimen/material_baseline_grid_2x"
-            android:textColor="@color/bright_pink"
             android:text="@{viewModel.error}"
+            android:textColor="@color/bright_pink"
             app:layout_constraintEnd_toEndOf="@id/codeInput"
             app:layout_constraintStart_toStartOf="@id/codeInput"
             app:layout_constraintTop_toBottomOf="@id/codeInput"

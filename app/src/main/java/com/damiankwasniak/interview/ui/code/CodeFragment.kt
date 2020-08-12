@@ -1,15 +1,17 @@
-package com.damiankwasniak.interview.fragment
+package com.damiankwasniak.interview.ui.code
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.damiankwasniak.EMPTY_STRING
+import com.damiankwasniak.domain.utils.AESUtils
 import com.damiankwasniak.interview.R
-import com.damiankwasniak.interview.base.BaseFragment
-import com.damiankwasniak.interview.base.BaseViewModel
 import com.damiankwasniak.interview.databinding.FragmentCodeBinding
 import com.damiankwasniak.interview.extensions.exhaustive
-import com.damiankwasniak.interview.viewmodel.CodeFragmentViewModel
+import com.damiankwasniak.interview.ui.base.BaseFragment
+import com.damiankwasniak.interview.ui.base.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_code.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

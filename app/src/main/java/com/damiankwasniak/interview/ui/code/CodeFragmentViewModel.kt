@@ -1,11 +1,12 @@
-package com.damiankwasniak.interview.viewmodel
+package com.damiankwasniak.interview.ui.code
 
-import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.damiankwasniak.domain.interactor.AuthInteractor
 import com.damiankwasniak.domain.utils.AsyncResult
 import com.damiankwasniak.interview.R
-import com.damiankwasniak.interview.base.BaseViewModel
+import com.damiankwasniak.interview.ui.base.BaseViewModel
 import com.damiankwasniak.interview.extensions.exhaustive
 import com.damiankwasniak.interview.provider.ResourcesProvider
 import kotlinx.coroutines.launch
@@ -18,7 +19,9 @@ class CodeFragmentViewModel(
 
     private val code = "1111"
 
-    var error: ObservableField<String?> = ObservableField()
+    private val _error: MutableLiveData<String?> = MutableLiveData(null)
+
+    val error: LiveData<String?> = _error
 
     fun onCodeEntered(code: String) {
         viewModelScope.launch {
@@ -34,12 +37,12 @@ class CodeFragmentViewModel(
         if (isValid) {
             Command.CodeCorrect.apply()
         } else {
-            error.set(resourcesProvider.getString(R.string.error_invalid_code))
+            _error.value = resourcesProvider.getString(R.string.error_invalid_code)
         }
     }
 
     fun onCodeChanged() {
-        error.set(null)
+        _error.value = null
     }
 
     sealed class Command {

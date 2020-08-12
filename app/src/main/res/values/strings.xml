@@ -8,4 +8,5 @@
     <string name="missing_permission_header">Missing permission</string>
     <string name="missing_permission_subheader">To take a photo we need access to the camera.</string>
     <string name="take_photo">Take a photo</string>
+    <string name="gallery_screen_title">Gallery</string>
 </resources>

@@ -1,9 +1,11 @@
 package com.damiankwasniak.domain.repository
 
+import com.damiankwasniak.domain.model.PhotoDomainModel
 import com.damiankwasniak.domain.utils.AsyncResult
-import java.io.File
 
 interface PhotosRepository {
 
-    fun savePhoto(file: File): AsyncResult<Boolean>
+    fun savePhoto(model: PhotoDomainModel): AsyncResult<Boolean>
+
+    fun getPhotos(): AsyncResult<List<PhotoDomainModel>>
 }

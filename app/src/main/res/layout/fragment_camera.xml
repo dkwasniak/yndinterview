@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.damiankwasniak.interview.viewmodel.CameraFragmentViewModel" />
+            type="com.damiankwasniak.interview.ui.camera.CameraFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.otaliastudios.cameraview.CameraView
+        <androidx.camera.view.PreviewView
             android:id="@+id/cameraView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:keepScreenOn="true"
-            app:cameraRequestPermissions="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,48 +27,53 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="@dimen/take_photo_background_height"
+            android:layout_height="@dimen/take_photo_bottom_background_height"
             android:background="@color/translucent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/torchImageView" />
-
-        <ImageView
-            android:id="@+id/torchImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/material_baseline_grid_4x"
-            android:layout_marginBottom="@dimen/material_baseline_grid_4x"
-            android:onClick="@{() -> viewModel.onTorchButtonClicked()}"
-            android:background="@drawable/transparent_oval_button_with_white_border"
-            android:padding="@dimen/material_baseline_grid_2x"
-            android:tint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_highlight_black" />
+            app:layout_constraintTop_toTopOf="@id/captureImageButton" />
 
         <Button
             android:id="@+id/captureImageButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/material_baseline_grid_2x"
+            android:layout_marginStart="@dimen/material_baseline_grid_4x"
             android:layout_marginEnd="@dimen/material_baseline_grid_4x"
+            android:layout_marginBottom="@dimen/material_baseline_grid_4x"
             android:background="@drawable/white_rounded_button"
             android:onClick="@{() -> viewModel.onTakePhotoButtonClicked()}"
             android:text="@string/take_photo"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@id/torchImageView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/torchImageView"
-            app:layout_constraintTop_toTopOf="@id/torchImageView" />
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/take_photo_top_background_height"
+            android:background="@color/translucent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="@dimen/material_baseline_grid_4x"
+            android:layout_height="@dimen/material_baseline_grid_4x"
+            android:layout_marginTop="@dimen/material_baseline_grid_3x"
+            android:layout_marginEnd="@dimen/material_baseline_grid_3x"
+            android:onClick="@{() -> viewModel.onGalleryButtonClicked()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_photo_white" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/grantPermissionView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:elevation="@dimen/material_baseline_grid_1x">
+            android:elevation="@dimen/material_baseline_grid_1x"
+            tools:visibility="gone">
 
 
             <LinearLayout
