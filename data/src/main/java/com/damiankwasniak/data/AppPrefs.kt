@@ -18,7 +18,7 @@ class AppPrefs(ctx: Context) {
         set(value) = editor.putString(KEY_SECURE_KEY, value).apply()
 
     var passHash: Int
-        get() = prefs.getInt(KEY_PASS_HASH, 0)
+        get() = prefs.getInt(KEY_PASS_HASH, 1479587)
         set(value) = editor.putInt(KEY_PASS_HASH, value).apply()
 
     var lock: Boolean

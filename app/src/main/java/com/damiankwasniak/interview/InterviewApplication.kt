@@ -3,10 +3,13 @@ package com.damiankwasniak.interview
 import android.app.Application
 import androidx.camera.camera2.Camera2Config
 import androidx.camera.core.CameraXConfig
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.damiankwasniak.data.di.dataModule
-import com.damiankwasniak.data.utils.Encrypter
+import com.damiankwasniak.data.utils.SessionManager
 import com.damiankwasniak.domain.di.domainModule
-import com.damiankwasniak.domain.interactor.AuthInteractor
 import com.damiankwasniak.interview.di.appModule
 import com.damiankwasniak.interview.di.viewModelModule
 import com.facebook.stetho.Stetho
@@ -15,15 +18,15 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class InterviewApplication : Application(), CameraXConfig.Provider {
+class InterviewApplication : Application(), CameraXConfig.Provider, LifecycleObserver {
 
-    private val encrypter: Encrypter by inject()
+    private val sessionManager: SessionManager by inject()
 
     override fun onCreate() {
         super.onCreate()
         initKoin()
         initStetho()
-        encrypter.initialize()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
     private fun initStetho() {
@@ -50,6 +53,11 @@ class InterviewApplication : Application(), CameraXConfig.Provider {
                 domainModule
             )
         }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onMoveToBackground() {
+        sessionManager.clearSession()
     }
 }
 

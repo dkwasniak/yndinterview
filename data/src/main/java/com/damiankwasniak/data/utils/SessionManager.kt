@@ -6,4 +6,8 @@ class SessionManager {
 
     var sessionCode: String = EMPTY_STRING
 
+    fun clearSession() {
+        sessionCode = EMPTY_STRING
+    }
+
 }

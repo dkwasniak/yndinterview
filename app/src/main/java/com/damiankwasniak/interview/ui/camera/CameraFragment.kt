@@ -31,8 +31,6 @@ class CameraFragment :
 
     private val permissionsManager: PermissionsManager by inject()
 
-    private var imageFile: File? = null
-
     private lateinit var lastCameraPermissionState: PermissionState
 
     override fun provideLayoutRes(): Int = R.layout.fragment_camera
@@ -52,7 +50,6 @@ class CameraFragment :
             onPermissionGranted()
         }
     }
-
 
     override fun onViewStateChanged(command: CameraFragmentViewModel.Command) {
         when (command) {
@@ -88,11 +85,7 @@ class CameraFragment :
             })
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         onPermissionResult(permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults))
     }

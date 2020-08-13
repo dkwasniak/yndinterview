@@ -4,7 +4,6 @@ import com.damiankwasniak.data.mapper.mapToDbModel
 import com.damiankwasniak.data.mapper.mapToDomainModel
 import com.damiankwasniak.data.model.PhotoDbModel
 import com.damiankwasniak.data.realm.RealmProvider
-import com.damiankwasniak.data.utils.Encrypter
 import com.damiankwasniak.data.utils.SessionManager
 import com.damiankwasniak.domain.model.PhotoDomainModel
 import com.damiankwasniak.domain.repository.PhotosRepository
@@ -38,7 +37,10 @@ class PhotosRepositoryImpl(
         return when (val secretKeyResult = secretKeyRepository.getSecretKey()) {
             is AsyncResult.Success -> {
                 if (secretKeyResult.data.isEmpty()) {
-                    generateSecretKey()
+                    val key = AESUtils.getRandomKey()
+                    val encryptedKey = AESUtils.encrypt(key.encoded, AESUtils.getKeyFromCode(sessionManager.sessionCode))
+                    secretKeyRepository.storeSecretKey(encryptedKey)
+                    key
                 } else {
                     val decryptedKey = AESUtils.decrypt(secretKeyResult.data, AESUtils.getKeyFromCode(sessionManager.sessionCode))
                     SecretKeySpec(decryptedKey, 0, decryptedKey.size, "AES")
@@ -50,12 +52,6 @@ class PhotosRepositoryImpl(
         }
     }
 
-    private fun generateSecretKey(): SecretKey {
-        val key = AESUtils.getRandomKey()
-        val encryptedKey = AESUtils.encrypt(key.encoded, AESUtils.getKeyFromCode(sessionManager.sessionCode))
-        secretKeyRepository.storeSecretKey(encryptedKey)
-        return key
-    }
 }
 
 private fun PhotoDomainModel.decrypt(key: SecretKey): PhotoDomainModel {

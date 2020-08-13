@@ -1,6 +1,5 @@
 package com.damiankwasniak.interview.di
 
-import com.damiankwasniak.data.utils.Encrypter
 import com.damiankwasniak.interview.manager.CameraManager
 import com.damiankwasniak.data.utils.SessionManager
 import com.damiankwasniak.interview.manager.file.DefaultFileManager
@@ -28,8 +27,6 @@ val appModule = module {
     }
 
     single { CameraManager(get(), get()) }
-
-    single { Encrypter(get()) }
 
     single<YndImageLoader> { GlideImageLoader(get()) }
 

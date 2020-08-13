@@ -15,13 +15,17 @@ class AndroidPermissionsManager(private val prefs: AppPrefs) :
 
     override fun askForPermission(ctx: Context, permission: Permission, rationale: String) {
         val code = createRandomRequestCode()
-        requestPermission(ctx, permission, code, rationale)
+        requestPermissionFromActivity(ctx, permission, code, rationale)
+    }
+
+    override fun askForPermission(activity: AppCompatActivity, permission: Permission, rationale: String) {
+        val code = createRandomRequestCode()
+        requestPermissionFromActivity(activity, permission, code, rationale)
     }
 
     override fun askForPermission(fragment: Fragment, permission: Permission, rationale: String) {
-        val ctx = fragment.requireActivity()
         val code = createRandomRequestCode()
-        requestPermission(ctx, permission, code, rationale)
+        requestPermissionFromFragment(fragment, permission, code, rationale)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray): PermissionResult {
@@ -47,14 +51,19 @@ class AndroidPermissionsManager(private val prefs: AppPrefs) :
         }
     }
 
-    private fun requestPermission(ctx: Context, permission: Permission, code: Int, rationale: String) {
+    private fun requestPermissionFromActivity(ctx: Context, permission: Permission, code: Int, rationale: String) {
         val activity = (ctx as? AppCompatActivity) ?: return
         ActivityCompat.requestPermissions(activity, arrayOf(permission), code)
+    }
+
+    private fun requestPermissionFromFragment(ctx: Fragment, permission: Permission, code: Int, rationale: String) {
+        val fragment = (ctx as? Fragment) ?: return
+        fragment.requestPermissions(arrayOf(permission), code)
     }
 
     private fun createRandomRequestCode(): Int = abs(Random().nextInt() % 10000)
 
     private fun hasPermission(ctx: Context, permission: Permission): Boolean =
-            ContextCompat.checkSelfPermission(ctx, permission) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(ctx, permission) == PackageManager.PERMISSION_GRANTED
 
 }

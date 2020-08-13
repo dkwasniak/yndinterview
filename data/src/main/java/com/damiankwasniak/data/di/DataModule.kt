@@ -8,7 +8,6 @@ import com.damiankwasniak.data.repository.SecretKeyRepositoryImpl
 import com.damiankwasniak.domain.repository.AuthorizationRepository
 import com.damiankwasniak.domain.repository.PhotosRepository
 import com.damiankwasniak.domain.repository.SecretKeyRepository
-import io.realm.Realm
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -17,16 +16,16 @@ val dataModule = module {
         AppPrefs(get())
     }
 
-    single {
-        AuthorizationRepositoryImpl(get(), get(), get()) as AuthorizationRepository
+    single<AuthorizationRepository> {
+        AuthorizationRepositoryImpl(get(), get())
     }
 
-    single {
-        PhotosRepositoryImpl(get(), get(), get()) as PhotosRepository
+    single<PhotosRepository> {
+        PhotosRepositoryImpl(get(), get(), get())
     }
 
-    single {
-        SecretKeyRepositoryImpl(get()) as SecretKeyRepository
+    single<SecretKeyRepository> {
+        SecretKeyRepositoryImpl(get())
     }
 
     single<RealmProvider> {

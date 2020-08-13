@@ -2,11 +2,13 @@ package com.damiankwasniak.interview.permission
 
 import android.Manifest
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 interface PermissionsManager {
 
     fun askForPermission(ctx: Context, permission: Permission, rationale: String = "")
+    fun askForPermission(fragment: AppCompatActivity, permission: Permission, rationale: String = "")
     fun askForPermission(fragment: Fragment, permission: Permission, rationale: String = "")
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out Permission>, grantResults: IntArray): PermissionResult
     fun checkPermission(ctx: Context, permission: Permission): PermissionState
