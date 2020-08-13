@@ -1,16 +1,19 @@
 package com.damiankwasniak.data.repository
 
 import com.damiankwasniak.data.AppPrefs
+import com.damiankwasniak.data.realm.RealmProvider
 import com.damiankwasniak.data.utils.Encrypter
 import com.damiankwasniak.data.utils.SessionManager
 import com.damiankwasniak.domain.repository.AuthorizationRepository
 import com.damiankwasniak.domain.utils.AsyncResult
+import com.damiankwasniak.extensions.secretKeyDao
 
 class AuthorizationRepositoryImpl(
     private val appPrefs: AppPrefs,
     private val encrypter: Encrypter,
     private val sessionManager: SessionManager
 ) : AuthorizationRepository {
+
 
     override fun isLocked(): AsyncResult<Boolean> {
         return AsyncResult.Success(appPrefs.lock)

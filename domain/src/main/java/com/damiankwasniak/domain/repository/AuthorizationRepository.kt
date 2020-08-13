@@ -9,4 +9,5 @@ interface AuthorizationRepository {
     fun lock()
 
     fun isLocked(): AsyncResult<Boolean>
+
 }

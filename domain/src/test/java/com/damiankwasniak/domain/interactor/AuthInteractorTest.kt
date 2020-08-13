@@ -2,7 +2,6 @@ package com.damiankwasniak.domain.interactor
 
 import com.damiankwasniak.domain.api.model.PostApiModel
 import com.damiankwasniak.domain.mapper.PostApiModelToViewModelMapper
-import com.damiankwasniak.domain.repository.MainRepository
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
